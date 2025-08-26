@@ -38,7 +38,7 @@ out/
 
 ### Docker / Compose runtime ###
 # Local Synapse homeserver runtime data (DB, signing key, media store, generated config)
-synapse-data/
+synapse-data/*
 !synapse-data/.gitkeep
 # Container logs or temp files
 *.log
