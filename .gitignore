@@ -35,3 +35,27 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Docker / Compose runtime ###
+# Local Synapse homeserver runtime data (DB, signing key, media store, generated config)
+synapse-data/
+!synapse-data/.gitkeep
+# Container logs or temp files
+*.log
+logs/
+
+### OS / Editor noise ###
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+### Java / JVM crash dumps & profiling ###
+hs_err_pid*.log
+replay_pid*.log
+*.hprof
+
+### Misc ###
+# Environment / override files (create locally, not committed)
+.env
+
