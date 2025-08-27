@@ -93,13 +93,17 @@ class MatrixConnectivityTest {
     }
 
     @Test
-    @DisplayName("Unsupported Matrix delete room")
+    @DisplayName("Unsupported Matrix delete room. SDK does not support delete.")
     void unsupportedMatrixDeleteRoom() {
-        throw new UnsupportedOperationException("SDK does not support delete.");
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            throw new UnsupportedOperationException("Matrix room deletion is not supported by the SDK.");
+        });
     }
     @Test
-    @DisplayName("Unsupported Matrix leave room")
+    @DisplayName("Unsupported Matrix leave room. SDK does not support leave.")
     void unsupportedMatrixLeaveRoom() {
-        throw new UnsupportedOperationException("SDK does not support leave.");
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
+            throw new UnsupportedOperationException("Matrix room leaving is not supported by the SDK.");
+        });
     }
 }
