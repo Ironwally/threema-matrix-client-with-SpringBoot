@@ -42,6 +42,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.cosium.matrix_communication_client/matrix-communication-client
 	implementation 'com.cosium.matrix_communication_client:matrix-communication-client:1.9'
 
+	// Threema API
+	//implementation 'com.threema:threema-msgapi-tool:2.2.0'
+	implementation(files("libs/threema-msgapi-sdk-java-2.2.0/newjavasdk220.jar"))
 }
 
 tasks.named('test') {

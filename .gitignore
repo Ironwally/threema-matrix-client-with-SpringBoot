@@ -36,6 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
+### Gradle ###
+libs/
+
 ### Docker / Compose runtime ###
 # Local Synapse homeserver runtime data (DB, signing key, media store, generated config)
 synapse-data/*

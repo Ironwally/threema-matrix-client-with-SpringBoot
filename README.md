@@ -5,6 +5,10 @@
 - skip tests: `.\gradlew.bat build -x test`
 - Problem: matrix_communication_client sdk does not support E2EE
 
+## Prerequesits
+- Download Threema Java API: https://gateway.threema.ch/en/developer/sdk-java
+- Download Matrix-Rust-SDK: 
+
 ## Fresh build & start
 - run with tests
 ```

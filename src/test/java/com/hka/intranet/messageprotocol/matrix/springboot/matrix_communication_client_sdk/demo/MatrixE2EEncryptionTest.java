@@ -1,10 +1,14 @@
 package com.hka.intranet.messageprotocol.matrix.springboot.demo;
 
-import com.cosium.matrix_communication_client.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
-import org.junit.jupiter.api.Assertions;
+
+import com.cosium.matrix_communication_client.ClientEventResource;
+import com.cosium.matrix_communication_client.MatrixResources;
+import com.cosium.matrix_communication_client.Message;
+import com.cosium.matrix_communication_client.RoomResource;
 
 /**
  * Attempts to send a (NON-E2E) plaintext message to a room that is configured for
@@ -36,11 +40,11 @@ class MatrixE2EEncryptionTest {
 
     @Test
     @DisplayName("Attempt plaintext send to E2E room (crypto NOT implemented)")
-    void sendPlaintextToEncryptedRoom() {
+    void unsupportedMessageToEncryptedRoom() {
         String host = env("MATRIX_HOST", "matrix.local");
         String user = env("MATRIX_USERNAME", "admin");
         String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = env("MATRIX_E2E_ROOM_ID", "!TGjoCeAaQfARAPvZET:matrix.local");
+        String roomId = env("MATRIX_E2E_ROOM_ID", "!pQNMktHwkNzHEKxxtd:matrix.local");
 
         Assertions.assertDoesNotThrow(() -> {
             MatrixResources matrix = MatrixResources.factory()
