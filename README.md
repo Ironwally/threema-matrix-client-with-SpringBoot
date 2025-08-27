@@ -15,6 +15,7 @@
   - Execute the commands inside libs/threema-msgapi-sdk-java-2.2.0/.../source/
 - recommended: Download `Element` from `matrix.org`
 
+
 # For Threema
 - You need an active Gateway Licence to test and use the threema Gateway API. 
 - But you can look at nice code and just imagine it works 
@@ -23,6 +24,11 @@
 - **Remeber: Without a valid `Gateway Licence` and its `gatewayId` and `secret` manually set in the tests, they will always fail**
 
 # For Matrix 
+
+## Usage
+- First create a `.env` file in the main directory. Here you will put all configuration like: the *matrix-hostname* and *roomid*.
+- To send a message to a room find the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now run the `matrixConnectionAndSendMessage` test
+
 ## Local host name (matrix.local)
 The Matrix homeserver is configured with server_name `matrix.local`. Your OS will not resolve this automatically.
 

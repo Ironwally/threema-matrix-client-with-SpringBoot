@@ -43,7 +43,7 @@ class MatrixConnectivityTest {
         String host = env("MATRIX_HOST", "localhost");
         String user = env("MATRIX_USERNAME", "admin");
         String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = env("MATRIX_ROOM_ID", "!xhQeCglCmKHSGRksIp:matrix.local");
+        String roomId = env("MATRIX_ROOM_ID", "yourMatrixRoomID");
 
         Assertions.assertDoesNotThrow(() -> {
             MatrixResources matrix = MatrixResources.factory()
