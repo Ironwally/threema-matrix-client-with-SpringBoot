@@ -36,7 +36,7 @@ Options:
 1. Use `localhost` (Matrix user IDs will still show `:matrix.local`).
   - Set `MATRIX_HOST=localhost` in the `.env` file
 2. OR: Add a hosts entry so `matrix.local` resolves locally:
-  - Keep/Set `MATRIX_HOST=matrix.local` in the `.env` file
+  - Set `MATRIX_HOST=matrix.local` in the `.env` file
   - Windows 
     - Open an elevated PowerShell (Run as Administrator) and run:
       ```powershell
@@ -73,7 +73,7 @@ docker exec matrix-server register_new_matrix_user -u admin -p magentaerenfarve 
 
 ### See Results
 - Login with credentials via a client: `https://app.element.io/` or `Element app`
-  - homeserver: `http://matrix.local`
+  - homeserver: `http://matrix.local` or `http://localhost` (if you set that before)
     - if it doesn't work, try your address directly, should be: `http://127.0.0.1`
     - if it still doesn't work, consider downloading `Element` from `matrix.org` and trying with that
     - check if your local adress is set to point to `matrix.local` in your `/etc/hosts` or your equivalent on windows (should have been set by script)
