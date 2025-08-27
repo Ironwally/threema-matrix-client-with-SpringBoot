@@ -95,44 +95,11 @@ class MatrixConnectivityTest {
     @Test
     @DisplayName("Unsupported Matrix delete room")
     void unsupportedMatrixDeleteRoom() {
-        String host = env("MATRIX_HOST", "matrix.local");
-        String user = env("MATRIX_USERNAME", "admin");
-        String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = System.getProperty("MATRIX_CREATED_ROOM_ID", "def");
-        
-        Assertions.assertDoesNotThrow(() -> {
-            MatrixResources matrix = MatrixResources.factory()
-                .builder()
-                .http()
-                .hostname(host)
-                .defaultPort()
-                .usernamePassword(user, pass)
-                .build();
-
-            RoomResource room = matrix.rooms().byId(roomId);
-            throw new UnsupportedOperationException("SDK does not support delete.");
-        }, "SDK does not support delete.");
+        throw new UnsupportedOperationException("SDK does not support delete.");
     }
     @Test
     @DisplayName("Unsupported Matrix leave room")
     void unsupportedMatrixLeaveRoom() {
-        String host = env("MATRIX_HOST", "matrix.local");
-        String user = env("MATRIX_USERNAME", "admin");
-        String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = System.getProperty("MATRIX_CREATED_ROOM_ID", "def");
-        
-        Assertions.assertDoesNotThrow(() -> {
-            MatrixResources matrix = MatrixResources.factory()
-                .builder()
-                .http()
-                .hostname(host)
-                .defaultPort()
-                .usernamePassword(user, pass)
-                .build();
-
-            RoomResource room = matrix.rooms().byId(roomId);
-
-            throw new UnsupportedOperationException("SDK does not support leave.");
-        }, "SDK does not support leave.");
+        throw new UnsupportedOperationException("SDK does not support leave.");
     }
 }

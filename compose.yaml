@@ -16,6 +16,10 @@ services:
       dockerfile: Dockerfile
       args:
         SKIP_TESTS: "false"
+    # Service is inactive by default. Run normally via IDE. It will only start if the profile is explicitly enabled:
+    #   docker compose --profile demo up (-d)
+    profiles:
+      - demo
     ports:
       - "8080:8080"
     environment:

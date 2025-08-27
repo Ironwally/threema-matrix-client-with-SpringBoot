@@ -7,6 +7,7 @@
 
 ## Prerequesits
 - Download Threema Java API: https://gateway.threema.ch/en/developer/sdk-java
+  - Do initial setup via README.md commands executed inside libs/threema-msgapi-sdk-.../.../source/
 - Download Matrix-Rust-SDK: 
 
 ## Fresh build & start
