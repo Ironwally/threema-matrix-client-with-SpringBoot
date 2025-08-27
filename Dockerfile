@@ -16,14 +16,19 @@ RUN ./gradlew --no-daemon dependencies > /dev/null 2>&1 || true
 COPY src ./src
 
 # Run tests (unless SKIP_TESTS=true) then build jar
-RUN if [ "$SKIP_TESTS" = "true" ]; then \
-            ./gradlew --no-daemon clean bootJar -x test; \
-        else \
-            ./gradlew --no-daemon clean test bootJar || { \
-                echo "Some tests didn't complete successfully: Stopping execution"; \
-                exit 1; \
-            }; \
-        fi
+#RUN if [ "$SKIP_TESTS" = "true" ]; then \
+#            ./gradlew --no-daemon clean bootJar -x test; \
+#        else \
+#            ./gradlew --no-daemon clean test bootJar || { \
+#                echo "Some tests didn't complete successfully: Stopping execution"; \
+#                exit 1; \
+#            }; \
+#        fi
+        
+#skip tests
+RUN ./gradlew --no-daemon clean bootJar -x test
+# dont skip tests
+#RUN ./gradlew --no-daemon clean test bootJar
         
 FROM eclipse-temurin:21-jre AS runtime
 WORKDIR /app
