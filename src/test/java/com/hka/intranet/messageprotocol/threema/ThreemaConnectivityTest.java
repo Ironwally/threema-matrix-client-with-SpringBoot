@@ -12,14 +12,28 @@ import org.junit.jupiter.api.Test;
 import ch.threema.apitool.APIConnector;
 import ch.threema.apitool.PublicKeyStore;
 import ch.threema.apitool.utils.ApiResponse;
+import io.github.cdimascio.dotenv.Dotenv;
 
 class ThreemaConnectivityTest {
+
+    // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
+    private static final Dotenv DOTENV = Dotenv.configure()
+            .ignoreIfMissing()
+            .load();
+
+    private String env(String key, String def) {
+        String v = System.getenv(key);
+        if (v == null || v.isBlank()) {
+            v = DOTENV.get(key);
+        }
+        return (v == null || v.isBlank()) ? def : v;
+    }
 
     @Test
     @DisplayName("Threema connectivity and message send")
     void threemaConnection() {
-        String gatewayId = System.getProperty("threema.gatewayId", "*MYGWID1");
-        String secret    = System.getProperty("threema.secret", "SECRET_OF_MY_GATEWAY_ID");
+        String gatewayId = env("threema.gatewayId", "*MYGWID1");
+        String secret    = env("threema.secret", "SECRET_OF_MY_GATEWAY_ID");
 
         APIConnector connector = new APIConnector(gatewayId, secret, new PublicKeyStore() {
                 private final Path keyDirectory = Paths.get("build", "threema-public-keys");
@@ -64,13 +78,13 @@ class ThreemaConnectivityTest {
     @DisplayName("Threema connectivity and message send")
     void threemaMessageSend() {
 
-        String gatewayId = System.getProperty("threema.gatewayId", "*MYGWID1");
-        String secret    = System.getProperty("threema.secret", "SECRET_OF_MY_GATEWAY_ID");
+        String gatewayId = env("threema.gatewayId", "*MYGWID1");
+        String secret    = env("threema.secret", "SECRET_OF_MY_GATEWAY_ID");
 
         APIConnector connector = createAPIConnector(gatewayId, secret);
 
         String text = "Hello, Threema!";
-        String toThreemaId = System.getProperty("threema.to", "ECHOECHO");
+        String toThreemaId = env("threema.to", "ECHOECHO");
         ApiResponse<String> response = Assertions.assertDoesNotThrow(
             () -> connector.sendTextMessageSimple(toThreemaId, text),
             "sendTextMessageSimple threw an exception"

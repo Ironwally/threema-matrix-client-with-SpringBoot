@@ -3,6 +3,7 @@ package com.hka.intranet.messageprotocol.matrix.springboot.matrix_communication_
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
@@ -16,22 +17,30 @@ import com.cosium.matrix_communication_client.RoomResource;
  *
  * NOTE: This requires a reachable Matrix homeserver and a valid room id. Adjust
  * environment variables if needed:
- *   MATRIX_HOST (default: matrix.local)
+ *   MATRIX_HOST (default: localhost)
  *   MATRIX_USERNAME (default: admin)
  *   MATRIX_PASSWORD (default: magentaerenfarve)
  *   MATRIX_ROOM_ID (default: !GhYHbLfNOTzPklsVQY:matrix.local)
  */
 class MatrixConnectivityTest {
 
+    // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
+    private static final Dotenv DOTENV = Dotenv.configure()
+            .ignoreIfMissing()
+            .load();
+
     private String env(String key, String def) {
         String v = System.getenv(key);
+        if (v == null || v.isBlank()) {
+            v = DOTENV.get(key);
+        }
         return (v == null || v.isBlank()) ? def : v;
     }
 
     @Test
     @DisplayName("Matrix connectivity and message send")
     void matrixConnectionAndSendMessage() {
-        String host = env("MATRIX_HOST", "matrix.local");
+        String host = env("MATRIX_HOST", "localhost");
         String user = env("MATRIX_USERNAME", "admin");
         String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
         String roomId = env("MATRIX_ROOM_ID", "!xhQeCglCmKHSGRksIp:matrix.local");
@@ -58,7 +67,7 @@ class MatrixConnectivityTest {
     @Test
     @DisplayName("Matrix create room")
     void matrixCreateRoom() {
-        String host = env("MATRIX_HOST", "matrix.local");
+        String host = env("MATRIX_HOST", "localhost");
         String user = env("MATRIX_USERNAME", "admin");
         String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
         
@@ -81,7 +90,7 @@ class MatrixConnectivityTest {
             RoomResource room = matrix.rooms().create(createRoomInput);
 
             //set env roomID to room.id
-            System.setProperty("MATRIX_CREATED_ROOM_ID", room.id());
+            System.setProperty("MATRIX_ROOM_ID", room.id());
 
             room.sendMessage(
                 Message.builder()
