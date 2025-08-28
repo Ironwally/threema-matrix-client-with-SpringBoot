@@ -2,13 +2,17 @@ package com.hka.intranet.messageprotocol.matrix.springboot.matrix_communication_
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import io.github.cdimascio.dotenv.Dotenv;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
 import com.cosium.matrix_communication_client.Message;
 import com.cosium.matrix_communication_client.RoomResource;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 /**
  * Integration style test that attempts to build a Matrix client and send a message
@@ -22,6 +26,7 @@ import com.cosium.matrix_communication_client.RoomResource;
  *   MATRIX_PASSWORD (default: magentaerenfarve)
  *   MATRIX_ROOM_ID (default: !GhYHbLfNOTzPklsVQY:matrix.local)
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MatrixConnectivityTest {
 
     // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
@@ -38,12 +43,13 @@ class MatrixConnectivityTest {
     }
 
     @Test
-    @DisplayName("Matrix connectivity and message send")
-    void matrixConnectionAndSendMessage() {
+    @DisplayName("Matrix message send")
+    @Order(2)
+    void matrixSendMessage() {
         String host = env("MATRIX_HOST", "localhost");
         String user = env("MATRIX_USERNAME", "admin");
         String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = env("MATRIX_ROOM_ID", "yourMatrixRoomID");
+        String roomId = env("MATRIX_ROOM_ID", System.getProperty("MATRIX_CREATED_ROOM_ID", "roomID not found"));
 
         Assertions.assertDoesNotThrow(() -> {
             MatrixResources matrix = MatrixResources.factory()
@@ -57,8 +63,8 @@ class MatrixConnectivityTest {
             RoomResource room = matrix.rooms().byId(roomId);
             room.sendMessage(
                 Message.builder()
-                    .body("Connectivity test message")
-                    .formattedBody("<b>Connectivity test message</b>")
+                    .body("MessageSend test message")
+                    .formattedBody("<b>MessageSend test message</b>")
                     .build()
             );
         }, "Failed to connect to Matrix homeserver or send message. Check server availability, credentials, and **room id**.");
@@ -66,6 +72,7 @@ class MatrixConnectivityTest {
 
     @Test
     @DisplayName("Matrix create room")
+    @Order(1)
     void matrixCreateRoom() {
         String host = env("MATRIX_HOST", "localhost");
         String user = env("MATRIX_USERNAME", "admin");
@@ -90,7 +97,7 @@ class MatrixConnectivityTest {
             RoomResource room = matrix.rooms().create(createRoomInput);
 
             //set env roomID to room.id
-            System.setProperty("MATRIX_ROOM_ID", room.id());
+            System.setProperty("MATRIX_CREATED_ROOM_ID", room.id());
 
             room.sendMessage(
                 Message.builder()
