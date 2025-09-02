@@ -19,7 +19,7 @@ import ch.threema.apitool.types.GroupId;
 import ch.threema.apitool.utils.ApiResponse;
 import io.github.cdimascio.dotenv.Dotenv;
 
-class ThreemaConnectivityTest {
+class ThreemaStdSDKTest {
 
     // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
     private static final Dotenv DOTENV = Dotenv.configure()
@@ -166,6 +166,8 @@ class ThreemaConnectivityTest {
 
         System.out.println("Message Array: " + messageArray);
         Assertions.assertNotNull(messageArray, "Message Array should not be null");
-        Assertions.assertFalse(messageArray.isEmpty(), "Message Array should not be empty");
+        Assertions.assertDoesNotThrow(() -> {
+            messageArray.get(0);
+        }, "Message Array should not be empty");
     }
 }

@@ -27,7 +27,7 @@ import io.github.cdimascio.dotenv.Dotenv;
  *   MATRIX_ROOM_ID (default: !GhYHbLfNOTzPklsVQY:matrix.local)
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class MatrixConnectivityTest {
+class MatrixJavaSDKTest {
 
     // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
     private static final Dotenv DOTENV = Dotenv.configure()
@@ -108,18 +108,16 @@ class MatrixConnectivityTest {
         }, "Failed to create room.");
     }
 
+    /*
+
     @Test
     @DisplayName("Unsupported Matrix delete room. SDK does not support delete.")
     void unsupportedMatrixDeleteRoom() {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            throw new UnsupportedOperationException("Matrix room deletion is not supported by the SDK.");
-        });
     }
+
     @Test
     @DisplayName("Unsupported Matrix leave room. SDK does not support leave.")
     void unsupportedMatrixLeaveRoom() {
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            throw new UnsupportedOperationException("Matrix room leaving is not supported by the SDK.");
-        });
     }
+    */
 }

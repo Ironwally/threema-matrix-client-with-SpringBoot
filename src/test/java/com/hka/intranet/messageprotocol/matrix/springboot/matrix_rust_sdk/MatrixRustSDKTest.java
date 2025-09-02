@@ -21,13 +21,14 @@ import io.github.cdimascio.dotenv.Dotenv;
  *   MATRIX_ROOM_ID (default: !GhYHbLfNOTzPklsVQY:matrix.local)
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class MatrixConnectivityTest {
+class MatrixRustSDKTest {
 
     // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
     private static final Dotenv DOTENV = Dotenv.configure()
             .ignoreIfMissing()
             .load();
 
+    @SuppressWarnings("unused")
     private String env(String key, String def) {
         String v = System.getenv(key);
         if (v == null || v.isBlank()) {
@@ -38,14 +39,15 @@ class MatrixConnectivityTest {
 
     @Test
     @DisplayName("Matrix message send")
-    @Order(2)
+    @Order(1)
     void matrixSendMessage() {
-        String host = env("MATRIX_HOST", "localhost");
-        String user = env("MATRIX_USERNAME", "admin");
-        String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = env("MATRIX_ROOM_ID", System.getProperty("MATRIX_CREATED_ROOM_ID", "roomID not found"));
+        //String host = env("MATRIX_HOST", "localhost");
+        //String user = env("MATRIX_USERNAME", "admin");
+        //String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
+        //String roomId = env("MATRIX_ROOM_ID", System.getProperty("MATRIX_CREATED_ROOM_ID", "roomID not found"));
         
-        // Usage of Rust-Matrix-SDK
+        // Usage of Kotlin Bindings Rust-Matrix-SDK
         
+
     }
 }
