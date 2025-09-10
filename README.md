@@ -27,7 +27,7 @@
 
 ## Usage
 - First create a `.env` file in the main directory. Here you will put all configuration like: the *matrix-hostname* and *roomid*.
-- To send a message to a room find the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now run the `matrixConnectionAndSendMessage` test
+- To send a message to a room find the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now you can run the tests
 
 ## Local host name (matrix.local)
 The Matrix homeserver is configured with server_name `matrix.local`. Your OS will not resolve this automatically.
