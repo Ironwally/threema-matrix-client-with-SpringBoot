@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import com.cosium.matrix_communication_client.ClientEventPage;
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
 import com.cosium.matrix_communication_client.Message;
@@ -31,8 +32,8 @@ class MatrixJavaSDKTest {
 
     // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
     private static final Dotenv DOTENV = Dotenv.configure()
-            .ignoreIfMissing()
-            .load();
+        .ignoreIfMissing()
+        .load();
 
     private String env(String key, String def) {
         String v = System.getenv(key);
@@ -42,32 +43,23 @@ class MatrixJavaSDKTest {
         return (v == null || v.isBlank()) ? def : v;
     }
 
+    private static MatrixResources MATRIX;
+    private static RoomResource ROOM;
+
     @Test
     @DisplayName("Matrix message send")
     @Order(2)
     void matrixSendMessage() {
-        String host = env("MATRIX_HOST", "localhost");
-        String user = env("MATRIX_USERNAME", "admin");
-        String pass = env("MATRIX_PASSWORD", "magentaerenfarve");
-        String roomId = env("MATRIX_ROOM_ID", System.getProperty("MATRIX_CREATED_ROOM_ID", "roomID not found"));
+        RoomResource room = ROOM;
 
         Assertions.assertDoesNotThrow(() -> {
-            MatrixResources matrix = MatrixResources.factory()
-                .builder()
-                .http()
-                .hostname(host)
-                .defaultPort()
-                .usernamePassword(user, pass)
-                .build();
-
-            RoomResource room = matrix.rooms().byId(roomId);
             room.sendMessage(
                 Message.builder()
                     .body("MessageSend test message")
                     .formattedBody("<b>MessageSend test message</b>")
                     .build()
             );
-        }, "Failed to connect to Matrix homeserver or send message. Check server availability, credentials, and **room id**.");
+        }, "Failed to connect to send message. Check if test 'Matrix create room' succeeded.");
     }
 
     @Test
@@ -86,6 +78,7 @@ class MatrixJavaSDKTest {
                 .defaultPort()
                 .usernamePassword(user, pass)
                 .build();
+            MATRIX = matrix; // share with other tests
 
             CreateRoomInput createRoomInput = CreateRoomInput.builder()
                 .name("Test Room"+System.currentTimeMillis())
@@ -96,8 +89,10 @@ class MatrixJavaSDKTest {
 
             RoomResource room = matrix.rooms().create(createRoomInput);
 
-            //set env roomID to room.id
-            System.setProperty("MATRIX_CREATED_ROOM_ID", room.id());
+            Assertions.assertNotNull(room);
+            Assertions.assertNotNull(room.id());
+
+            ROOM = room; // share with other tests
 
             room.sendMessage(
                 Message.builder()
@@ -106,6 +101,20 @@ class MatrixJavaSDKTest {
                     .build()
             );
         }, "Failed to create room.");
+    }
+
+    @Test
+    @DisplayName("matrixFetchPage. Test not done yet")
+    void matrixFetchPage() {
+        RoomResource room = ROOM;
+
+        String dir = "b"; // direction of returning events by: "b" for backwards, "f" for forwards
+        long limit = 1; // Number of events to return
+        String from = null; // Token to start returning events from. Aquired from sync endpoint
+        String to = null; // Token to stop returning events at. Aquired from sync endpoint
+        ClientEventPage eventPage = room.fetchEventPage(dir, from, limit, to);
+        
+        Assertions.assertNotNull(eventPage);
     }
 
     /*
