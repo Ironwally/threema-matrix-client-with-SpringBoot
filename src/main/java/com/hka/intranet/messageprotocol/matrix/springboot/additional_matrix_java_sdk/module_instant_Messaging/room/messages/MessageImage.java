@@ -6,39 +6,62 @@ package com.hka.intranet.messageprotocol.matrix.springboot.additional_matrix_jav
 public class MessageImage extends MessageBase {
 
     private final String url; // mxc:// URI or http fallback
-    private final long size;
-    private final String mimeType;
+    private final String filename;
+    private final ImageInfo info;
 
     protected MessageImage(Builder builder) {
         super(builder);
         this.url = builder.url;
-        this.size = builder.size;
-        this.mimeType = builder.mimeType;
+        this.filename = builder.filename;
+        this.info = builder.info;
     }
+
+    public String url() { return url; }
+    public String filename() { return filename; }
+    public ImageInfo info() { return info; }
 
     public static final class Builder extends MessageBase.Builder {
 
         private String url;
-        private long size;
-        private String mimeType;
+        private String filename;
+        private ImageInfo info;
 
         Builder(MessageBase.Builder base) {
             super(base);
             this.type = "m.image";
-            this.size = 0L;
-            this.mimeType = "image/jpeg"; // default
         }
 
-        public Builder url(String url) { this.url = url; return this; }
-        public Builder size(long size) { this.size = size; return this; }
-        public Builder mimeType(String mimeType) { this.mimeType = mimeType; return this; }
+        public Builder url(String uri) { this.url = uri; return this; }
+        
+        public Builder fillMetaData() {
+            //TODO: Requires implementing matrix media API resolver
+            throw new UnsupportedOperationException("Not implemented yet.");
+        }
     
+        // caption for image
         @Override public Builder body(String body) { super.body(body); return this; }
         @Override public Builder format(String format) { super.format(format); return this; }
         @Override public Builder formattedBody(String formattedBody) { super.formattedBody(formattedBody); return this; }
         @Override public Builder timestamp(long timestamp) { super.timestamp(timestamp); return this; }
         @Override public Builder id(long id) { super.id(id); return this; }
         @Override public MessageImage build() { return new MessageImage(this); }
+    }
+
+    public static class ImageInfo {
+        public final Integer h;
+        public final Integer w;
+        public final Integer size;
+        public final String mimeType;
+
+        public ImageInfo(Integer h, Integer w, Integer size, String mimeType) {
+        if (h == null || w == null || size == null || mimeType == null) {
+            throw new IllegalArgumentException("Attribute missing");
+        }
+        this.h = h;
+        this.w = w;
+        this.size = size;
+        this.mimeType = mimeType;
+        }
     }
 
 }

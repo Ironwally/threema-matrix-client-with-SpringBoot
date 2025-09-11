@@ -1,21 +1,19 @@
 package com.hka.intranet.messageprotocol.matrix.springboot.additional_matrix_java_sdk.demo;
 
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
 import com.cosium.matrix_communication_client.Message;
 import com.cosium.matrix_communication_client.RoomResource;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.TestMethodOrder;
-
 import com.hka.intranet.messageprotocol.matrix.springboot.additional_matrix_java_sdk.module_instant_Messaging.room.messages.MessageBase;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 
@@ -46,8 +44,8 @@ class NewMessageTest {
         assertNotNull(ROOM, "ROOM not initialized. Ensure matrixCreateRoom ran first.");
         assertNotNull(MATRIX, "MATRIX not initialized.");
         String content = "Hello, Matrix!";
-        String sender = "user123";
         RoomResource room = ROOM;
+        MatrixResources matrix = MATRIX;
     
         // Act
         Assertions.assertDoesNotThrow(() -> {
@@ -55,11 +53,14 @@ class NewMessageTest {
             MessageBase messageText = MessageBase.builder()
                     .text(content)
                     .build();
+            String mxc_uri = matrix.uploadFile("An_image.png");
             MessageBase messageImage = MessageBase.builder()
-                    .image("An image", "image_url.jpg")
+                    .image("An image", mxc_uri) // fetch here already?
+                    .fillMetaData() // fetches image metadata from server
                     .build();
+            String mxc_uri2 = matrix.uploadFile("document.pdf");
             MessageBase messageFile = MessageBase.builder()
-                    .file("A PDF document", "document.pdf")
+                    .file("A PDF document", mxc_uri2) // fetch here already?
                     .build();
             MessageBase messageAudio = MessageBase.builder()
                     .audio("An audio file", "audio.mp3")
@@ -76,7 +77,8 @@ class NewMessageTest {
                     .open()
                     .build();
 
-            // Prepare modify for messages after sending
+            // Modify messages after sending
+            // TODO: Use fetchEventPage to get message IDs?
             MessageBase messagePollEnd = MessageBase.builder()
                     .fromMessageId("poll_message_id_789")
                     .pollEnd()
@@ -84,9 +86,15 @@ class NewMessageTest {
             MessageBase messageTextModify = MessageBase.builder()
                     .fromMessageId("text_message_id_123")
                     .text("Modified text")
-                    .build();
 
+
+            // TODO: New approach to modifying library: Fix problem in source code and package as with same Maven coordinates and add classifier
+            // https://stackoverflow.com/questions/34121725/modifying-files-from-external-library-in-java 
+            
+            // -> Migrate current changes to fork of sdk and implement them there
+            
             // Send messages
+            // TODO: Extend functionality by implementing own class based on library:
             // TODO: Implement sendMessage for different Message types
             // TODO: Implement modify for messages
             // https://stackoverflow.com/questions/36952056/extend-a-java-library-by-adding-methods-to-it
@@ -97,12 +105,11 @@ class NewMessageTest {
             room.sendMessage(
                 messageImage    
             );
-
-
             }, "Failed to create or send messages");        
 
         // Assert
-        assertNotNull(message);
+    // basic sanity
+    assertNotNull(ROOM);
     }
 
     @Test

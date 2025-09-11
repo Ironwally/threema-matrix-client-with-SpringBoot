@@ -127,7 +127,7 @@ public class MessageBase {
     public MessageImage.Builder image(String content, String url) { return new MessageImage.Builder(this).body(content).url(url); }
     public MessageFile.Builder file(String content, String url) { return new MessageFile.Builder(this).body(content).url(url); }
     public MessageAudio.Builder audio(String content, String url) { return new MessageAudio.Builder(this).body(content).url(url); }
-    public MessageSticker.Builder sticker(String content) { return new MessageSticker.Builder(this).body(content); }
+    public MessageEmote.Builder sticker(String content) { return new MessageEmote.Builder(this).body(content); }
     public MessagePoll.Builder poll(String question, String[] answers) { return new MessagePoll.Builder(this).question(question).answers(answers); }
   }
 }
