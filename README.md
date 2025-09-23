@@ -27,10 +27,10 @@
 
 ## Usage
 - First create a `.env` file in the main directory. Here you will put all configuration like: the *matrix-hostname* and *roomid*.
-- To send a message to a room find the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now you can run the tests
+- To send a message to a specific room open element-desktop and get the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now you can run the tests
 
 ## Local host name (matrix.local)
-The Matrix homeserver is configured with server_name `matrix.local`. Your OS will not resolve this automatically.
+The standard server address for matrix is `localhost`
 
 Options:
 1. Use `localhost` (Matrix user IDs will still show `:matrix.local`).
@@ -52,6 +52,7 @@ Options:
       ```
 
 ## Startup
+- you might need to use sudo for docker commands
 ### Fresh build & start
 ```
 docker compose build (--no-cache)

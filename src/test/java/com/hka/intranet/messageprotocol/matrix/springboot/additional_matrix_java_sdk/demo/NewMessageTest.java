@@ -12,8 +12,6 @@ import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
 import com.cosium.matrix_communication_client.Message;
 import com.cosium.matrix_communication_client.RoomResource;
-import com.hka.intranet.messageprotocol.matrix.springboot.additional_matrix_java_sdk.module_instant_Messaging.room.messages.MessageBase;
-
 import io.github.cdimascio.dotenv.Dotenv;
 
 
