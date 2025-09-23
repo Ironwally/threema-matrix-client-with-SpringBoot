@@ -50,40 +50,40 @@ class NewMessageTest {
         // Act
         Assertions.assertDoesNotThrow(() -> {
             // Create messages
-            MessageBase messageText = MessageBase.builder()
+            Message messageText = Message.builder()
                     .text(content)
                     .build();
             String mxc_uri = matrix.uploadFile("An_image.png");
-            MessageBase messageImage = MessageBase.builder()
+            Message messageImage = Message.builder()
                     .image("An image", mxc_uri) // fetch here already?
                     .fillMetaData() // fetches image metadata from server
                     .build();
             String mxc_uri2 = matrix.uploadFile("document.pdf");
-            MessageBase messageFile = MessageBase.builder()
+            Message messageFile = Message.builder()
                     .file("A PDF document", mxc_uri2) // fetch here already?
                     .build();
-            MessageBase messageAudio = MessageBase.builder()
+            Message messageAudio = Message.builder()
                     .audio("An audio file", "audio.mp3")
                     .build();
-            MessageBase messageSticker = MessageBase.builder()
+            Message messageSticker = Message.builder()
                     .sticker("sticker_id_456")
                     .build();
-            MessageBase messagePollClosed = MessageBase.builder()
+            Message messagePollClosed = Message.builder()
                     .poll("Revealed after manual ending", new String[]{"Red", "Blue", "Green"})
                     .hidden()
                     .build();
-            MessageBase messagePollOpen = MessageBase.builder()
+            Message messagePollOpen = Message.builder()
                     .poll("Revealed after vote", new String[]{"Red", "Blue", "Green"})
                     .open()
                     .build();
 
             // Modify messages after sending
             // TODO: Use fetchEventPage to get message IDs?
-            MessageBase messagePollEnd = MessageBase.builder()
+            Message messagePollEnd = Message.builder()
                     .fromMessageId("poll_message_id_789")
                     .pollEnd()
                     .build();
-            MessageBase messageTextModify = MessageBase.builder()
+            Message messageTextModify = Message.builder()
                     .fromMessageId("text_message_id_123")
                     .text("Modified text")
 
