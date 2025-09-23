@@ -1,4 +1,4 @@
-package com.hka.intranet.messageprotocol.matrix.springboot.additional_matrix_java_sdk.demo;
+package com.hka.intranet.messageprotocol.matrix.springboot.matrix_communication_client_sdk.demo;
 
 import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -10,8 +10,9 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
-import com.cosium.matrix_communication_client.Message;
 import com.cosium.matrix_communication_client.RoomResource;
+import com.cosium.matrix_communication_client.message.Message;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 
@@ -84,6 +85,7 @@ class NewMessageTest {
             Message messageTextModify = Message.builder()
                     .fromMessageId("text_message_id_123")
                     .text("Modified text")
+                    .build();
 
 
             // TODO: New approach to modifying library: Fix problem in source code and package as with same Maven coordinates and add classifier

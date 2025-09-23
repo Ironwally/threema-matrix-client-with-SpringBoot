@@ -10,8 +10,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import com.cosium.matrix_communication_client.ClientEventPage;
 import com.cosium.matrix_communication_client.CreateRoomInput;
 import com.cosium.matrix_communication_client.MatrixResources;
-import com.cosium.matrix_communication_client.Message;
 import com.cosium.matrix_communication_client.RoomResource;
+import com.cosium.matrix_communication_client.message.Message;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -55,8 +55,7 @@ class MatrixJavaSDKTest {
         Assertions.assertDoesNotThrow(() -> {
             room.sendMessage(
                 Message.builder()
-                    .body("MessageSend test message")
-                    .formattedBody("<b>MessageSend test message</b>")
+                    .text("MessageSend test message")
                     .build()
             );
         }, "Failed to connect to send message. Check if test 'Matrix create room' succeeded.");
@@ -96,8 +95,7 @@ class MatrixJavaSDKTest {
 
             room.sendMessage(
                 Message.builder()
-                    .body("Room Creation test message")
-                    .formattedBody("<b>Room Creation test message</b>")
+                    .text("Room Creation test message")
                     .build()
             );
         }, "Failed to create room.");

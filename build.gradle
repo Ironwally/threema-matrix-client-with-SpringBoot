@@ -21,8 +21,10 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	mavenCentral()
-	maven { url = uri("${rootDir}/../../matrix/matrix-communication-client/local-repo") }
+	// removed for mavenLocal()
+	//maven { url = uri("${rootDir}/../../matrix/matrix-communication-client/local-repo") }
 }
 
 dependencies {
@@ -43,7 +45,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 
 	// Local compilation of forked Matrix communication client SDK
-	implementation("io.github.ironwally:matrix-communication-client-fork:1.10-SNAPSHOT")
+	implementation("io.github.ironwally:matrix-communication-client-fork:1.10")
 	// Original matrix-communication-client sdk
 	//implementation 'com.cosium.matrix_communication_client:matrix-communication-client:1.9'
 
