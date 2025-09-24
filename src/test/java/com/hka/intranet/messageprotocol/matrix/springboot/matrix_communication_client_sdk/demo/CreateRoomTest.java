@@ -1,6 +1,7 @@
 package com.hka.intranet.messageprotocol.matrix.springboot.matrix_communication_client_sdk.demo;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -25,16 +26,17 @@ import io.github.cdimascio.dotenv.Dotenv;
  *   MATRIX_HOST (default: localhost)
  *   MATRIX_USERNAME (default: admin)
  *   MATRIX_PASSWORD (default: magentaerenfarve)
- *   MATRIX_ROOM_ID (default: !GhYHbLfNOTzPklsVQY:matrix.local)
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class MatrixJavaSDKTest {
+class CreateRoomTest {
 
-    // Load .env once (ignored if file missing). Enables local overrides without exporting env vars.
+    private static MatrixResources MATRIX;
+    private static RoomResource ROOM;
+
+    // Handle ENV File
     private static final Dotenv DOTENV = Dotenv.configure()
         .ignoreIfMissing()
         .load();
-
     private String env(String key, String def) {
         String v = System.getenv(key);
         if (v == null || v.isBlank()) {
@@ -43,26 +45,8 @@ class MatrixJavaSDKTest {
         return (v == null || v.isBlank()) ? def : v;
     }
 
-    private static MatrixResources MATRIX;
-    private static RoomResource ROOM;
-
     @Test
-    @DisplayName("Matrix message send")
-    @Order(2)
-    void matrixSendMessage() {
-        RoomResource room = ROOM;
-
-        Assertions.assertDoesNotThrow(() -> {
-            room.sendMessage(
-                Message.builder()
-                    .text("MessageSend test message")
-                    .build()
-            );
-        }, "Failed to connect to send message. Check if test 'Matrix create room' succeeded.");
-    }
-
-    @Test
-    @DisplayName("Matrix create room")
+    @DisplayName("Matrix create room and send message")
     @Order(1)
     void matrixCreateRoom() {
         String host = env("MATRIX_HOST", "localhost");
@@ -102,7 +86,8 @@ class MatrixJavaSDKTest {
     }
 
     @Test
-    @DisplayName("matrixFetchPage. Test not done yet")
+    @Disabled("Unfinished")
+    @DisplayName("matrixFetchPage")
     void matrixFetchPage() {
         RoomResource room = ROOM;
 
