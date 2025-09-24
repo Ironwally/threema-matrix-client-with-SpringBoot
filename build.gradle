@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.hka.intranet.messageprotocol.matrix.springboot'
 version = '0.0.1-SNAPSHOT'
-description = 'Demo project for Spring Boot'
+description = 'Forked Matrix Communication Client SDK Testing project for Spring Boot'
 
 java {
 	toolchain {
@@ -23,8 +23,6 @@ configurations {
 repositories {
 	mavenLocal()
 	mavenCentral()
-	// removed for mavenLocal()
-	//maven { url = uri("${rootDir}/../../matrix/matrix-communication-client/local-repo") }
 }
 
 dependencies {
