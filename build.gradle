@@ -14,11 +14,7 @@ java {
 	}
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+// Removed unused annotation processor extension (no annotation processors configured)
 
 repositories {
 	mavenLocal()
@@ -27,29 +23,14 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 	// Load .env file in tests (for MatrixConnectivityTest)
 	testImplementation 'io.github.cdimascio:dotenv-java:3.0.0'
 
-	// for live testing with Spring Boot
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-	implementation 'org.springframework.boot:spring-boot-starter'
-
-	// Local compilation of forked Matrix communication client SDK
+	// Local forked Matrix communication client SDK
 	implementation("io.github.ironwally:matrix-communication-client-fork:1.10")
-	// Original matrix-communication-client sdk
-	//implementation 'com.cosium.matrix_communication_client:matrix-communication-client:1.9'
-
-	// Threema API - Maven/gradle address from local lib generated doc, but does not work, therefore using local jar
-	//implementation 'ch.threema.apitool:msgapi-sdk-java:2.2.0'
-	implementation(files("libs/threema-msgapi-sdk-java-2.2.0/newjavasdk220/threema-msgapi-tool.jar"))
 }
 
 tasks.named('test') {

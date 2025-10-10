@@ -1,4 +1,4 @@
-# Threema-Matrix via Spring Boot
+# Matrix via Spring Boot
 
 - Spring Boot via docker does not work right now.
 - Run via IDE. All logic is found in the tests
@@ -7,23 +7,18 @@
 - Problem to fix: matrix_communication_client sdk does not support E2EE
   - Integrate Matrix-Rust-SDK instead?
 
+
+# Developement
+## Help for Developement
+- Inside matrix client: 
+  - In a room run: /devtools
+    - Send events
+    - Explore room data 
+
 # Setup
 
 ## Prerequesits 
-- removes IDE Error messages: Download Threema Java API: https://gateway.threema.ch/en/developer/sdk-java
-  - Run initial setup commands in included README.md. 
-  - Execute the commands inside libs/threema-msgapi-sdk-java-2.2.0/.../source/
-- recommended: Download `Element` from `matrix.org`
-
-
-# For Threema
-- You need an active Gateway Licence to test and use the threema Gateway API. 
-- But you can look at nice code and just imagine it works 
-- Set that up
-- Manually put gatewayId, secret into tests or create a .env file. But you'll probably need to fix stuff in the tests then. Aka.: `System.getProperty(..)..`  
-- **Remeber: Without a valid `Gateway Licence` and its `gatewayId` and `secret` manually set in the tests, they will always fail**
-
-# For Matrix 
+- Download `Element` from `matrix.org` 
 
 ## Usage
 - First create a `.env` file in the main directory. Here you will put all configuration like: the *matrix-hostname* and *roomid*.
