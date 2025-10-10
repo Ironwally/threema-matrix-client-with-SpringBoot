@@ -42,7 +42,6 @@ class NewMessageTest {
         // Arrange
         assertNotNull(ROOM, "ROOM not initialized. Ensure matrixCreateRoom ran first.");
         assertNotNull(MATRIX, "MATRIX not initialized.");
-        String content = "Hello, Matrix!";
         RoomResource room = ROOM;
         MatrixResources matrix = MATRIX;
     
@@ -50,7 +49,7 @@ class NewMessageTest {
         Assertions.assertDoesNotThrow(() -> {
             // Create messages
             Message messageText = Message.builder()
-                    .text(content)
+                    .text("A text message")
                     .build();
             String mxc_uri = matrix.uploadFile("An_image.png");
             Message messageImage = Message.builder()
@@ -68,11 +67,11 @@ class NewMessageTest {
                     .sticker("sticker_id_456")
                     .build();
             Message messagePollClosed = Message.builder()
-                    .poll("Revealed after manual ending", new String[]{"Red", "Blue", "Green"})
+                    .poll("Poll revealed after manual ending", new String[]{"Red", "Blue", "Green"})
                     .hidden()
                     .build();
             Message messagePollOpen = Message.builder()
-                    .poll("Revealed after vote", new String[]{"Red", "Blue", "Green"})
+                    .poll("Poll revealed after vote", new String[]{"Red", "Blue", "Green"})
                     .open()
                     .build();
 
