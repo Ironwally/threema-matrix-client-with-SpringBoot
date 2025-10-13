@@ -1,4 +1,4 @@
-# Threema-Matrix via Spring Boot
+# Matrix via Spring Boot
 
 - Spring Boot via docker does not work right now.
 - Run via IDE. All logic is found in the tests
@@ -7,30 +7,31 @@
 - Problem to fix: matrix_communication_client sdk does not support E2EE
   - Integrate Matrix-Rust-SDK instead?
 
+# Planned Project Move
+This Project is closely coupled to the github repo ironwally/matrix-communication-client.
+Almost all logic now resides there. (**Only** a **few planned implementation details** still reside in this repo)
+This repo now **only** serves as an example for a **docker compose matrix setup**.
+It can also be used to see results in a client when running tests in ironwally/matrix-communication-client
+
+
+# Developement
+## Help for Developement
+- Inside matrix client: 
+  - In a room run: /devtools
+    - Send events
+    - Explore room data 
+
 # Setup
 
 ## Prerequesits 
-- removes IDE Error messages: Download Threema Java API: https://gateway.threema.ch/en/developer/sdk-java
-  - Run initial setup commands in included README.md. 
-  - Execute the commands inside libs/threema-msgapi-sdk-java-2.2.0/.../source/
-- recommended: Download `Element` from `matrix.org`
-
-
-# For Threema
-- You need an active Gateway Licence to test and use the threema Gateway API. 
-- But you can look at nice code and just imagine it works 
-- Set that up
-- Manually put gatewayId, secret into tests or create a .env file. But you'll probably need to fix stuff in the tests then. Aka.: `System.getProperty(..)..`  
-- **Remeber: Without a valid `Gateway Licence` and its `gatewayId` and `secret` manually set in the tests, they will always fail**
-
-# For Matrix 
+- Download `Element` from `matrix.org` 
 
 ## Usage
 - First create a `.env` file in the main directory. Here you will put all configuration like: the *matrix-hostname* and *roomid*.
-- To send a message to a room find the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now you can run the tests
+- To send a message to a specific room open element-desktop and get the room ID in the *room settings* under *advanced*. Then set `MATRIX_ROOM_ID=theMatrixRoomID` in the .env file. Now you can run the tests
 
 ## Local host name (matrix.local)
-The Matrix homeserver is configured with server_name `matrix.local`. Your OS will not resolve this automatically.
+The standard server address for matrix is `localhost`
 
 Options:
 1. Use `localhost` (Matrix user IDs will still show `:matrix.local`).
@@ -52,6 +53,7 @@ Options:
       ```
 
 ## Startup
+- you might need to use sudo for some commands
 ### Fresh build & start
 ```
 docker compose build (--no-cache)
@@ -83,51 +85,17 @@ docker exec matrix-server register_new_matrix_user -u admin -p magentaerenfarve 
 - After you ran the tests you should see the messages/room created in you client
 
 ## Shutdown
-### Stop
 ```
 docker compose down
 ```
 
-### (optional) Clean files
+## Clean files
 ```
 docker compose down --remove-orphans
 rm ./synapse-data/homeserver.yaml
 rm ./synapse-data/matrix.local.log.config
 rm ./synapse-data/matrix.local.signing.key
 ```
-Full Cleanup Checklist:
-- Stop and remove running containers
-- Remove project images (especially demo:latest)
-- Remove named volumes (matrix_db, matrix_turn) and any dangling volumes
-- Remove builder cache layers (optional)
-- Delete local generated folders that Docker rebuilds anyway (optional)
-- Rebuild and start via docker compose
-- Verify containers healthy
-- Commands (PowerShell). Run inside the project root.
-
-- One-liner (aggressive full reset including volumes & caches):
-- **!Be careful if you have other docker containers!**
-```
-docker compose down --remove-orphans; docker volume rm matrix_db matrix_turn 2>$null; docker rmi demo:latest 2>$null; docker builder prune -f; Remove-Item -Recurse -Force .\build,.\bin 2>$null; docker compose build --no-cache; docker compose up -d
-```
-
-1. Stop and remove stack
-```
-docker compose down --remove-orphans
-```
-
-2. Remove named volumes (WARNING: wipes Matrix DB data)
-```
-docker volume rm matrix_db
-docker volume rm matrix_turn
-```
-
-3. Remove the application image (forces full rebuild)
-```
-docker rmi demo:latest 2>$null
-```
-(If the `image name` differs after build, list images first: `docker images | Select-String demo`.)
-
 
 # Credits
 - Credits to @thorastrup My docker compose Matrix and nginx is based his, Matrix admin creation command is also from him 
