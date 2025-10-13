@@ -11,7 +11,7 @@
 This Project is closely coupled to the github repo ironwally/matrix-communication-client.
 Almost all logic now resides there. (**Only** a **few planned implementation details** still reside in this repo)
 This repo now **only** serves as an example for a **docker compose matrix setup**.
-**Because of this the rest of this repo will be absorbed into ironwally/matrix-communication-client soon.**
+It can also be used to see results in a client when running tests in ironwally/matrix-communication-client
 
 
 # Developement
