@@ -95,6 +95,8 @@ docker compose down --remove-orphans
 rm ./synapse-data/homeserver.yaml
 rm ./synapse-data/matrix.local.log.config
 rm ./synapse-data/matrix.local.signing.key
+rm ./synapse-data/homeserver.db
+rm -r ./synapse-data/media_store
 ```
 
 # Credits
