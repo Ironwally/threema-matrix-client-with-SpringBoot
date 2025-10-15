@@ -30,7 +30,7 @@ dependencies {
 	testImplementation 'io.github.cdimascio:dotenv-java:3.0.0'
 
 	// Local forked Matrix communication client SDK
-	implementation("io.github.ironwally:matrix-communication-client-fork:1.10")
+	implementation("io.github.ironwally:matrix-communication-client-fork:1.10-SNAPSHOT")
 }
 
 tasks.named('test') {

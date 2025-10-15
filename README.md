@@ -12,7 +12,7 @@ This Project is closely coupled to the github repo ironwally/matrix-communicatio
 Almost all logic now resides there. (**Only** a **few planned implementation details** still reside in this repo)
 This repo now **only** serves as an example for a **docker compose matrix setup**.
 It can also be used to see results in a client when running tests in ironwally/matrix-communication-client
-
+- Get room members method
 
 # Developement
 ## Help for Developement
